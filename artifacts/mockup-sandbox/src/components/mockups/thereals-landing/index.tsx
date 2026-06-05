@@ -482,7 +482,7 @@ function HeroSection() {
               marginTop: 8, lineHeight: 1.5,
             }}
           >
-            where authentic Creators meet brands that deserve them
+            Where authentic Creators' content is found and licensed by great brands.
           </motion.p>
         </div>
 
@@ -497,7 +497,7 @@ function HeroSection() {
             fontSize: 'clamp(17px, 2vw, 22px)',
             lineHeight: 1.55, color: C.ink2, marginBottom: 36, maxWidth: 440,
           }}>
-            The platform built for Creators who refuse to compromise. Authentic storytelling. Real partnerships. Audiences that trust you.
+            The licensing infrastructure for authentic social content. Brands find it, license it, and get campaigns live. Creators earn from content they already shared.
           </p>
 
           <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
@@ -511,34 +511,6 @@ function HeroSection() {
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.55 }}
-        style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          paddingTop: 48, borderTop: `1px solid ${C.dust}`,
-        }}
-      >
-        <div style={{ display: 'flex', gap: 64 }}>
-          {[
-            { n: '2,400+', l: 'Creators Waitlisted' },
-            { n: '48', l: 'Brand Partners' },
-            { n: 'Q3 2026', l: 'Beta Launch' },
-          ].map(s => (
-            <div key={s.l}>
-              <div className="tr-stat-num">{s.n}</div>
-              <div className="tr-stat-label">{s.l}</div>
-            </div>
-          ))}
-        </div>
-        <p style={{
-          fontFamily: mono, fontSize: 9, letterSpacing: '0.16em',
-          color: C.dust, textTransform: 'uppercase',
-        }}>
-          Applications open now
-        </p>
-      </motion.div>
     </section>
   );
 }
@@ -568,15 +540,15 @@ function ManifestoSection() {
             fontSize: 'clamp(17px, 2vw, 21px)',
             lineHeight: 1.7, color: C.ink2,
           }}>
-            We believe <strong style={{ color: C.ink, fontWeight: 600 }}>authentic Creators</strong> deserve more than algorithms and diminishing returns.{' '}
-            <span style={{ color: C.red, fontWeight: 600 }}>The Reals&#8482;</span> is the platform that puts the relationship between Creator and audience first, and finds brands that honour that.
+            Most licensing platforms clear rights after a buyer selects content. It's a great model, but with social media footage it's really hard to predict, and campaigns run on two things: deadlines and budgets. To avoid the time lag, the rejection risk and sourcing headaches, we created{' '}
+            <span style={{ color: C.red, fontWeight: 600 }}>The Reals&#8482;</span>. We pre-clear creators' content at onboarding. Buyers search a verified, guaranteed no-AI content library and license at a fixed price. Creators earn passively. No one wastes time.
           </p>
           <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
             <button className="tr-btn-primary" onClick={() => navigate('/join/creator')}>
               Apply for Beta
             </button>
             <p style={{ fontFamily: body, fontSize: 12, color: C.muted }}>
-              Beta access is limited. Applications reviewed individually.
+              Founding creator spots are limited. Each application reviewed by a human.
             </p>
           </div>
         </InView>
@@ -623,10 +595,10 @@ function ManifestoSection() {
 }
 
 const features = [
-  { num: '01', title: 'Curated Brand Matching', body: 'We connect Creators with brands whose values align with yours. No cold outreach, no race to the bottom on rates. Every brand on The Reals has been vetted for authentic partnership potential.', tag: 'For Creators' },
-  { num: '02', title: 'Transparent Deal Flow', body: 'Clear briefs, fair rates, honest timelines. Every campaign on The Reals comes with full transparency on deliverables, creative freedom, and commercial terms before you commit.', tag: 'Deal Structure' },
-  { num: '03', title: 'Audience-First Analytics', body: 'Track what your audience actually responds to. Engagement quality over vanity metrics. Help brands understand the difference between reach and real influence.', tag: 'Intelligence' },
-  { num: '04', title: 'A Community of Reals', body: 'Access a private network of Creators who take their craft seriously. Peer review, shared learnings, and a collective voice strong enough to set new industry standards.', tag: 'Community' },
+  { num: '01', title: 'Pre-Cleared at Source', body: 'Every Creator on The Reals pre-agrees to licensing terms in principle, at onboarding. That means buyers can request to license any asset in the library immediately. No chasing, no negotiation, no campaign delays.', tag: 'For Buyers' },
+  { num: '02', title: 'Fixed, Transparent Pricing, So You Can Plan Your Budget', body: 'No procurement friction. No rights surprises. Organic Social at £599 per asset. Paid Media at £900. One-year non-exclusive usage, built into every transaction. Anything outside these terms can be carefully negotiated with the Creators.', tag: 'Pricing' },
+  { num: '03', title: '100% Human. Zero AI. Ever.', body: 'Every asset in The Reals library is human-made and C2PA-verified. Provenance is confirmed at onboarding, not guessed at after the fact. Buyers get full legal indemnification built in.', tag: 'Verification' },
+  { num: '04', title: 'Connect and Set Up Once. Keep Living Your Life.', body: 'Creators sync their channels once, pre-agree to pricing in principle, and earn a 50/50 royalty split on every license. No briefs, no deadlines. Just the content that\'s already been made anyway. Come back to the platform only to review license requests.', tag: 'For Creators' },
 ];
 
 function MovementSection() {
@@ -645,11 +617,10 @@ function MovementSection() {
               lineHeight: 0.92, color: C.ink, marginTop: 32,
             }}>
               <span style={{ display: 'block' }}>The</span>
-              <span style={{ display: 'block', color: C.red }}>Move-</span>
-              <span style={{ display: 'block' }}>ment.</span>
+              <span style={{ display: 'block' }}>Movement.</span>
             </h2>
             <p style={{ fontFamily: body, fontSize: 13, color: C.muted, marginTop: 24 }}>
-              Built for Creators, not algorithms
+              How licensing works on The Reals
             </p>
           </InView>
         </div>
@@ -698,10 +669,10 @@ function JoinSection() {
             I'm a<br /><span style={{ color: C.red }}>Creator.</span>
           </h2>
           <p style={{ fontFamily: body, fontSize: 15, lineHeight: 1.65, color: C.ink2, marginBottom: 28, maxWidth: 360 }}>
-            For Creators who build real audiences and want brand relationships that don't compromise their voice.
+            Connect once. Keep making content you'd make anyway. Earn a 50/50 royalty split every time a brand licenses your footage.
           </p>
           <ul style={{ listStyle: 'none', marginBottom: 40 }}>
-            {['Curated brand matching, no cold outreach', 'Transparent rates and creative freedom', 'Community of Creators who get it'].map(item => (
+            {['No briefs, no deadlines, no exclusivity', '50/50 revenue split on every license', 'Review and accept or reject every request'].map(item => (
               <li key={item} style={{ fontFamily: body, fontSize: 13, color: C.ink2, padding: '10px 0', borderBottom: `1px solid ${C.dust}`, display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ color: C.red, flexShrink: 0 }}>+</span>{item}
               </li>
@@ -719,22 +690,22 @@ function JoinSection() {
         >
           <div style={{ position: 'absolute', top: -16, right: 24, fontFamily: serif, fontWeight: 800, fontSize: 120, color: 'rgba(26,24,20,0.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>02</div>
           <div style={{ display: 'inline-block', fontFamily: mono, fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.muted, border: `1px solid ${C.dust}`, padding: '4px 10px', marginBottom: 20 }}>
-            Brand Enquiries
+            Licensing Buyers
           </div>
           <h2 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(38px, 4.5vw, 60px)', lineHeight: 0.92, color: C.ink, marginBottom: 20 }}>
             I'm a<br /><span style={{ color: C.red }}>Brand.</span>
           </h2>
           <p style={{ fontFamily: body, fontSize: 15, lineHeight: 1.65, color: C.ink2, marginBottom: 28, maxWidth: 360 }}>
-            For brands that understand the value of authentic advocacy and want Creators who genuinely believe in what they do.
+            Search a pre-cleared library of authentic, human-made social content. License at a fixed price. Get your campaign live without the sourcing lag.
           </p>
           <ul style={{ listStyle: 'none', marginBottom: 40 }}>
-            {['Access to verified authentic Creators', 'Campaign briefs built around creative integrity', 'Measurable impact beyond vanity metrics'].map(item => (
+            {['Pre-cleared at source, no rights surprises', 'Fixed pricing: £599 Organic / £900 Paid Media', 'Full legal indemnification on every license'].map(item => (
               <li key={item} style={{ fontFamily: body, fontSize: 13, color: C.ink2, padding: '10px 0', borderBottom: `1px solid ${C.dust}`, display: 'flex', alignItems: 'center', gap: 12 }}>
                 <span style={{ color: C.red, flexShrink: 0 }}>+</span>{item}
               </li>
             ))}
           </ul>
-          <span className="tr-btn-ghost">Partner with Us</span>
+          <span className="tr-btn-ghost">License Content</span>
         </button>
       </InView>
     </section>
@@ -798,20 +769,20 @@ function CreatorJoinPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 72, paddingBottom: 72, borderBottom: `1px solid ${C.dust}` }}>
                 <div>
                   <p style={{ fontFamily: body, fontSize: 16, lineHeight: 1.7, color: C.ink2, marginBottom: 20 }}>
-                    The Reals&#8482; is built for Creators who take authenticity seriously. If you've built an audience on the back of genuine storytelling, this is your platform.
+                    The Reals&#8482; is a licensing library for human-made authentic content. If you're already making real-life social content with an engaged audience, your camera roll could be earning passive royalties.
                   </p>
                   <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: C.muted, marginBottom: 16 }}>
-                    We're in Beta. That means access is deliberately limited, and every application is reviewed by a human. We're not looking for follower counts. We're looking for Creators with a clear voice and a community that trusts them.
+                    We're in Beta, deliberately limited to Founding Creators. There are no briefs to fulfil, no deadlines to hit, no exclusivity required. Connect your channels, pre-agree to our standard licensing terms, and earn a 50/50 split every time a brand licenses your footage.
                   </p>
                   <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: C.muted }}>
-                    Beta members get early access to brand partnerships, input into how the platform develops, and a founding-member rate that never changes.
+                    Founding Creators get a credibility signal that stays with them on the platform, a rate structure locked at founding terms, and a direct line into how The Reals develops.
                   </p>
                 </div>
                 <div>
                   {[
-                    { n: '01', t: 'Apply', b: "Tell us about yourself and your audience. No pitch deck required." },
-                    { n: '02', t: 'Review', b: "Applications are reviewed individually. We'll respond within 5 days." },
-                    { n: '03', t: 'Onboard', b: "Access the platform, connect your channels, and start seeing matched briefs." },
+                    { n: '01', t: 'Apply', b: "Tell us about yourself and your audience. We're looking for Creators with a genuine voice, not a follower count." },
+                    { n: '02', t: 'Pre-agree', b: "We'll walk you through our standard licensing terms. You pre-agree in principle, then review and accept or reject every individual request." },
+                    { n: '03', t: 'Earn', b: "Connect your channels. When a brand licenses your content, you receive a 50/50 royalty split automatically via Stripe." },
                   ].map(step => (
                     <div key={step.n} style={{ display: 'flex', gap: 20, marginBottom: 28 }}>
                       <div style={{ fontFamily: serif, fontWeight: 800, fontSize: 13, color: C.red, paddingTop: 2, flexShrink: 0 }}>{step.n}</div>
@@ -916,7 +887,7 @@ function BrandJoinPage() {
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
               <div style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(246,245,241,0.45)', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
                 <span style={{ display: 'block', width: 32, height: 1, background: C.red, flexShrink: 0 }} />
-                Brand Partnerships
+                Licensing Buyers
               </div>
               <h1 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(52px, 7vw, 96px)', lineHeight: 0.9, color: C.white, marginBottom: 40 }}>
                 Partner<br /><span style={{ color: C.red }}>With Us.</span>
@@ -927,17 +898,17 @@ function BrandJoinPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 72, paddingBottom: 72, borderBottom: '1px solid rgba(246,245,241,0.1)' }}>
                 <div>
                   <p style={{ fontFamily: body, fontSize: 16, lineHeight: 1.7, color: 'rgba(246,245,241,0.7)', marginBottom: 20 }}>
-                    The Reals&#8482; connects brands with Creators whose audiences have chosen to be there. Not algorithmically delivered, but genuinely earned.
+                    The Reals&#8482; is a pre-cleared library of authentic, human-made social content. Every asset is C2PA-verified and available to license at a fixed price, immediately, without sourcing lag or rights negotiation.
                   </p>
                   <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: 'rgba(246,245,241,0.4)' }}>
-                    We work with brands that understand the difference between reach and resonance. If you're looking for the cheapest route to impressions, this isn't for you. If you want Creators who will stand behind your product because they genuinely believe in it, let's talk.
+                    We built this for agency creatives, in-house social teams, and producers who lose days chasing down rights that should have been clear from the start. If you want real content that's legally clean from the moment you find it, this is the infrastructure you've been missing.
                   </p>
                 </div>
                 <div>
                   {[
-                    { n: '01', t: 'Verified Creators Only', b: "Every Creator on The Reals has been individually vetted for authenticity, consistency, and audience trust." },
-                    { n: '02', t: 'Brief-to-Match', b: "Share your campaign brief. We surface Creators who are a genuine fit, not just the ones with the biggest numbers." },
-                    { n: '03', t: 'Full Transparency', b: "Clear deliverables, fair rates, and creative briefs that respect the Creator's voice." },
+                    { n: '01', t: 'Search', b: "Browse a curated library of pre-cleared, human-verified authentic content. Filter by category, platform, format, and creator." },
+                    { n: '02', t: 'License Instantly', b: "Select an asset and license it at a fixed price. Organic Social at £599. Paid Media at £900. One-year non-exclusive usage. Full legal indemnification included." },
+                    { n: '03', t: 'Campaign Live', b: "No procurement lag. No rights surprises. No chasing Creators. Pre-cleared at source means you can go from search to live in minutes." },
                   ].map(step => (
                     <div key={step.n} style={{ display: 'flex', gap: 20, marginBottom: 28 }}>
                       <div style={{ fontFamily: serif, fontWeight: 800, fontSize: 13, color: C.red, paddingTop: 2, flexShrink: 0 }}>{step.n}</div>
