@@ -1,0 +1,19 @@
+/* The landing page uses inline styles and injected global styles via useGlobalStyles().
+   This file is kept minimal — no Tailwind variables needed for this design. */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #ede9e0;
+  color: #1a1814;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
