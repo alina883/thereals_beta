@@ -12,9 +12,6 @@ import editorial400 from '@assets/EditorialToday-Regular_1780690089220.ttf';
 import editorial600 from '@assets/EditorialToday-SemiBold_1780690089220.ttf';
 import editorial700 from '@assets/EditorialToday-Bold_1780690089219.ttf';
 import editorial800 from '@assets/EditorialToday-ExtraBold_1780690089221.ttf';
-import editorial400i from '@assets/EditorialToday-Italic_1780690089220.ttf';
-import editorial700i from '@assets/EditorialToday-BoldItalic_1780690089221.ttf';
-import editorial800i from '@assets/EditorialToday-ExtraBoldItalic_1780690089221.ttf';
 
 import logo09 from '@assets/thereals_logos-09_1780690102829.svg';
 import logo10 from '@assets/thereals_logos-10_1780690102829.svg';
@@ -29,12 +26,12 @@ const C = {
   muted:  '#8a8278',
   dust:   '#b8b0a0',
   red:    '#e30005',
-  redD:   '#b80004',
   white:  '#f6f5f1',
 } as const;
 
 const mono = "'DM Mono', 'Courier New', monospace";
 const serif = "'EditorialToday', Georgia, serif";
+const body = "'Inter', 'Helvetica Neue', Arial, sans-serif";
 
 function useGlobalStyles() {
   useEffect(() => {
@@ -43,7 +40,7 @@ function useGlobalStyles() {
     const s = document.createElement('style');
     s.id = 'thereals-global';
     s.textContent = `
-      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Inter:wght@400;500&display=swap');
 
       @font-face {
         font-family: 'EditorialToday';
@@ -69,31 +66,13 @@ function useGlobalStyles() {
         font-style: normal;
         src: url('${editorial800}') format('truetype');
       }
-      @font-face {
-        font-family: 'EditorialToday';
-        font-weight: 400;
-        font-style: italic;
-        src: url('${editorial400i}') format('truetype');
-      }
-      @font-face {
-        font-family: 'EditorialToday';
-        font-weight: 700;
-        font-style: italic;
-        src: url('${editorial700i}') format('truetype');
-      }
-      @font-face {
-        font-family: 'EditorialToday';
-        font-weight: 800;
-        font-style: italic;
-        src: url('${editorial800i}') format('truetype');
-      }
 
       .tr-root {
         cursor: none;
         background: ${C.paper};
         color: ${C.ink};
-        font-family: ${mono};
-        font-weight: 300;
+        font-family: ${body};
+        font-weight: 400;
         overflow-x: hidden;
       }
       .tr-root *, .tr-root *::before, .tr-root *::after {
@@ -147,7 +126,8 @@ function useGlobalStyles() {
         transition: background 0.2s, transform 0.15s;
       }
       .tr-btn-primary:hover {
-        background: ${C.redD};
+        background: ${C.red};
+        opacity: 0.88;
         transform: translateY(-1px);
       }
       .tr-btn-ghost {
@@ -201,9 +181,8 @@ function useGlobalStyles() {
       .tr-input {
         display: block;
         width: 100%;
-        font-family: ${mono};
-        font-size: 11px;
-        letter-spacing: 0.04em;
+        font-family: ${body};
+        font-size: 14px;
         background: transparent;
         border: none;
         border-bottom: 1px solid ${C.dust};
@@ -218,9 +197,8 @@ function useGlobalStyles() {
       .tr-select {
         display: block;
         width: 100%;
-        font-family: ${mono};
-        font-size: 11px;
-        letter-spacing: 0.04em;
+        font-family: ${body};
+        font-size: 14px;
         background: transparent;
         border: none;
         border-bottom: 1px solid ${C.dust};
@@ -389,7 +367,7 @@ function Nav() {
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 500,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '20px 52px',
+      padding: '14px 52px',
     }}>
       <button
         onClick={() => navigate('/')}
@@ -399,8 +377,8 @@ function Nav() {
           src={logoSrc}
           alt="The Reals"
           style={{
-            width: isDark ? 44 : 40,
-            height: isDark ? 44 : 40,
+            width: 88,
+            height: 88,
             display: 'block',
           }}
         />
@@ -473,34 +451,49 @@ function HeroSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             style={{
               fontFamily: mono, fontSize: 9, letterSpacing: '0.28em',
-              textTransform: 'uppercase', color: C.muted, marginBottom: 18,
+              textTransform: 'uppercase', color: C.muted, marginBottom: 28,
             }}
           >
-            Beta — Open to Creators
+            Beta / Open to Creators
           </motion.p>
-          <motion.h1
+
+          <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontFamily: serif, fontWeight: 800,
-              fontSize: 'clamp(80px, 11vw, 160px)',
-              lineHeight: 0.88, color: C.ink,
-            }}
           >
-            The
-            <em style={{ display: 'block', fontStyle: 'italic', color: C.red }}>Reals.</em>
-          </motion.h1>
+            <div style={{
+              overflow: 'hidden',
+              width: '100%',
+              height: 'clamp(140px, 18vw, 260px)',
+              position: 'relative',
+              marginBottom: 24,
+            }}>
+              <img
+                src={logo08}
+                alt="The Reals wordmark"
+                style={{
+                  width: '115%',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  transformOrigin: 'top left',
+                }}
+              />
+            </div>
+          </motion.div>
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
             style={{
-              fontFamily: mono, fontStyle: 'italic', fontSize: 10, color: C.muted,
-              marginTop: 20, transform: 'rotate(-1.5deg)', display: 'inline-block',
+              fontFamily: body, fontSize: 13, color: C.muted,
+              marginTop: 8, lineHeight: 1.5,
             }}
           >
-            — where authentic Creators meet brands that deserve them
+            where authentic Creators meet brands that deserve them
           </motion.p>
         </div>
 
@@ -511,60 +504,21 @@ function HeroSection() {
           style={{ paddingBottom: 8, paddingLeft: 52 }}
         >
           <p style={{
-            fontFamily: serif, fontStyle: 'italic', fontWeight: 700,
-            fontSize: 'clamp(18px, 2.2vw, 26px)',
-            lineHeight: 1.5, color: C.ink2, marginBottom: 32, maxWidth: 440,
+            fontFamily: body, fontWeight: 500,
+            fontSize: 'clamp(17px, 2vw, 22px)',
+            lineHeight: 1.55, color: C.ink2, marginBottom: 36, maxWidth: 440,
           }}>
             The platform built for Creators who refuse to compromise. Authentic storytelling. Real partnerships. Audiences that trust you.
           </p>
 
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 40 }}>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
             <button className="tr-btn-primary" onClick={() => navigate('/join/creator')}>
-              Join as a Creator →
+              Join as a Creator
             </button>
             <button className="tr-btn-ghost" onClick={() => navigate('/join/brand')}>
               For Brands
             </button>
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            style={{
-              position: 'relative',
-              overflow: 'hidden',
-              maxWidth: 380,
-              borderTop: `1px solid ${C.dust}`,
-              paddingTop: 20,
-            }}
-          >
-            <p style={{
-              fontFamily: mono, fontSize: 8, letterSpacing: '0.22em',
-              textTransform: 'uppercase', color: C.muted, marginBottom: 10,
-            }}>
-              The Reals — Identity
-            </p>
-            <div style={{
-              overflow: 'hidden',
-              height: 110,
-              position: 'relative',
-            }}>
-              <img
-                src={logo08}
-                alt="The Reals wordmark"
-                style={{
-                  width: '100%',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  transform: 'scale(1.02)',
-                  transformOrigin: 'top left',
-                }}
-              />
-            </div>
-          </motion.div>
         </motion.div>
       </div>
 
@@ -621,19 +575,19 @@ function ManifestoSection() {
         <InView>
           <div className="tr-section-tag">Manifesto</div>
           <p style={{
-            fontFamily: serif, fontStyle: 'italic',
-            fontSize: 'clamp(18px, 2.2vw, 26px)',
-            lineHeight: 1.6, color: C.ink2,
+            fontFamily: body, fontWeight: 400,
+            fontSize: 'clamp(17px, 2vw, 21px)',
+            lineHeight: 1.7, color: C.ink2,
           }}>
-            We believe <strong style={{ fontStyle: 'normal', color: C.ink, fontWeight: 700 }}>authentic Creators</strong> deserve more than algorithms and diminishing returns.{' '}
-            <span style={{ color: C.red, fontStyle: 'normal', fontWeight: 700 }}>The Reals</span> is the platform that puts the relationship between Creator and audience first — and finds brands that honour that.
+            We believe <strong style={{ color: C.ink, fontWeight: 600 }}>authentic Creators</strong> deserve more than algorithms and diminishing returns.{' '}
+            <span style={{ color: C.red, fontWeight: 600 }}>The Reals&#8482;</span> is the platform that puts the relationship between Creator and audience first, and finds brands that honour that.
           </p>
           <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
             <button className="tr-btn-primary" onClick={() => navigate('/join/creator')}>
               Apply for Beta
             </button>
-            <p style={{ fontFamily: mono, fontStyle: 'italic', fontSize: 9, letterSpacing: '0.14em', color: C.muted }}>
-              Beta access is limited — applications reviewed individually
+            <p style={{ fontFamily: body, fontSize: 12, color: C.muted }}>
+              Beta access is limited. Applications reviewed individually.
             </p>
           </div>
         </InView>
@@ -669,8 +623,8 @@ function ManifestoSection() {
                 <span style={{ fontFamily: mono, fontSize: 9, color: 'rgba(255,255,255,0.6)' }}>00:00</span>
               </div>
             </div>
-            <p style={{ fontFamily: mono, fontStyle: 'italic', fontSize: 9, color: C.muted, marginTop: 16, letterSpacing: '0.06em' }}>
-              The Reals manifesto film — in production
+            <p style={{ fontFamily: body, fontSize: 12, color: C.muted, marginTop: 16 }}>
+              The Reals manifesto film, in production
             </p>
           </div>
         </InView>
@@ -680,9 +634,9 @@ function ManifestoSection() {
 }
 
 const features = [
-  { num: '01', title: 'Curated Brand Matching', body: 'We connect Creators with brands whose values align with yours — no cold outreach, no race to the bottom on rates. Every brand on The Reals has been vetted for authentic partnership potential.', tag: 'For Creators' },
+  { num: '01', title: 'Curated Brand Matching', body: 'We connect Creators with brands whose values align with yours. No cold outreach, no race to the bottom on rates. Every brand on The Reals has been vetted for authentic partnership potential.', tag: 'For Creators' },
   { num: '02', title: 'Transparent Deal Flow', body: 'Clear briefs, fair rates, honest timelines. Every campaign on The Reals comes with full transparency on deliverables, creative freedom, and commercial terms before you commit.', tag: 'Deal Structure' },
-  { num: '03', title: 'Audience-First Analytics', body: 'Track what your audience actually responds to — engagement quality over vanity metrics. Help brands understand the difference between reach and real influence.', tag: 'Intelligence' },
+  { num: '03', title: 'Audience-First Analytics', body: 'Track what your audience actually responds to. Engagement quality over vanity metrics. Help brands understand the difference between reach and real influence.', tag: 'Intelligence' },
   { num: '04', title: 'A Community of Reals', body: 'Access a private network of Creators who take their craft seriously. Peer review, shared learnings, and a collective voice strong enough to set new industry standards.', tag: 'Community' },
 ];
 
@@ -702,11 +656,11 @@ function MovementSection() {
               lineHeight: 0.92, color: C.ink, marginTop: 32,
             }}>
               <span style={{ display: 'block' }}>The</span>
-              <em style={{ display: 'block', fontStyle: 'italic', color: C.red }}>Move-</em>
+              <span style={{ display: 'block', color: C.red }}>Move-</span>
               <span style={{ display: 'block' }}>ment.</span>
             </h2>
-            <p style={{ fontFamily: mono, fontStyle: 'italic', fontSize: 10, color: C.muted, marginTop: 24, transform: 'rotate(-1deg)', display: 'inline-block' }}>
-              — built for Creators, not algorithms
+            <p style={{ fontFamily: body, fontSize: 13, color: C.muted, marginTop: 24 }}>
+              Built for Creators, not algorithms
             </p>
           </InView>
         </div>
@@ -721,7 +675,7 @@ function MovementSection() {
                   <h3 style={{ fontFamily: serif, fontWeight: 700, fontSize: 'clamp(17px, 1.8vw, 21px)', color: C.ink, marginBottom: 10 }}>
                     {f.title}
                   </h3>
-                  <p style={{ fontFamily: mono, fontSize: 11, lineHeight: 1.85, color: C.muted, fontWeight: 300 }}>
+                  <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.75, color: C.muted }}>
                     {f.body}
                   </p>
                   <span style={{ display: 'inline-block', marginTop: 14, fontFamily: mono, fontSize: 8, letterSpacing: '0.18em', textTransform: 'uppercase', background: C.red, color: '#fff', padding: '4px 10px' }}>
@@ -749,22 +703,22 @@ function JoinSection() {
         >
           <div style={{ position: 'absolute', top: -16, right: 24, fontFamily: serif, fontWeight: 800, fontSize: 120, color: 'rgba(26,24,20,0.045)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>01</div>
           <div className="tr-section-tag" style={{ marginBottom: 20 }}>
-            <span style={{ color: C.red, fontFamily: mono, fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase' }}>● Now Open</span>
+            <span style={{ color: C.red, fontFamily: mono, fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Now Open</span>
           </div>
           <h2 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(38px, 4.5vw, 60px)', lineHeight: 0.92, color: C.ink, marginBottom: 20 }}>
-            I'm a<br /><em style={{ fontStyle: 'italic' }}>Creator.</em>
+            I'm a<br /><span style={{ color: C.red }}>Creator.</span>
           </h2>
-          <p style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 15, color: C.ink2, marginBottom: 28, maxWidth: 360 }}>
+          <p style={{ fontFamily: body, fontSize: 15, lineHeight: 1.65, color: C.ink2, marginBottom: 28, maxWidth: 360 }}>
             For Creators who build real audiences and want brand relationships that don't compromise their voice.
           </p>
           <ul style={{ listStyle: 'none', marginBottom: 40 }}>
             {['Curated brand matching, no cold outreach', 'Transparent rates and creative freedom', 'Community of Creators who get it'].map(item => (
-              <li key={item} style={{ fontFamily: mono, fontSize: 11, color: C.ink2, padding: '10px 0', borderBottom: `1px solid ${C.dust}`, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ color: C.red, flexShrink: 0 }}>→</span>{item}
+              <li key={item} style={{ fontFamily: body, fontSize: 13, color: C.ink2, padding: '10px 0', borderBottom: `1px solid ${C.dust}`, display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ color: C.red, flexShrink: 0 }}>+</span>{item}
               </li>
             ))}
           </ul>
-          <span className="tr-btn-primary">Join as a Creator →</span>
+          <span className="tr-btn-primary">Join as a Creator</span>
         </button>
       </InView>
 
@@ -779,19 +733,19 @@ function JoinSection() {
             Brand Enquiries
           </div>
           <h2 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(38px, 4.5vw, 60px)', lineHeight: 0.92, color: C.ink, marginBottom: 20 }}>
-            I'm a<br /><em style={{ fontStyle: 'italic' }}>Brand.</em>
+            I'm a<br /><span style={{ color: C.red }}>Brand.</span>
           </h2>
-          <p style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 15, color: C.ink2, marginBottom: 28, maxWidth: 360 }}>
+          <p style={{ fontFamily: body, fontSize: 15, lineHeight: 1.65, color: C.ink2, marginBottom: 28, maxWidth: 360 }}>
             For brands that understand the value of authentic advocacy and want Creators who genuinely believe in what they do.
           </p>
           <ul style={{ listStyle: 'none', marginBottom: 40 }}>
             {['Access to verified authentic Creators', 'Campaign briefs built around creative integrity', 'Measurable impact beyond vanity metrics'].map(item => (
-              <li key={item} style={{ fontFamily: mono, fontSize: 11, color: C.ink2, padding: '10px 0', borderBottom: `1px solid ${C.dust}`, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ color: C.red, flexShrink: 0 }}>→</span>{item}
+              <li key={item} style={{ fontFamily: body, fontSize: 13, color: C.ink2, padding: '10px 0', borderBottom: `1px solid ${C.dust}`, display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ color: C.red, flexShrink: 0 }}>+</span>{item}
               </li>
             ))}
           </ul>
-          <span className="tr-btn-ghost">Partner with Us →</span>
+          <span className="tr-btn-ghost">Partner with Us</span>
         </button>
       </InView>
     </section>
@@ -803,7 +757,7 @@ function Footer() {
   return (
     <footer style={{ padding: '48px 52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: `1px solid ${C.dust}` }}>
       <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', cursor: 'none' }}>
-        <img src={logo09} alt="The Reals" style={{ width: 32, height: 32 }} />
+        <img src={logo09} alt="The Reals" style={{ width: 52, height: 52 }} />
       </button>
       <div style={{ display: 'flex', gap: 32 }}>
         <button className="tr-nav-link" onClick={() => navigate('/join/creator')}>Creators</button>
@@ -812,7 +766,7 @@ function Footer() {
         <button className="tr-nav-link">Privacy</button>
       </div>
       <p style={{ fontFamily: mono, fontSize: 9, color: C.dust, letterSpacing: '0.1em' }}>
-        © 2026 The Reals™
+        &copy; 2026 The Reals&#8482;
       </p>
     </footer>
   );
@@ -839,7 +793,7 @@ function CreatorJoinPage() {
     <motion.div key="creator" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} style={{ minHeight: '100vh', background: C.paper }}>
       <div style={{ maxWidth: 880, margin: '0 auto', padding: '140px 52px 100px' }}>
         <button className="tr-nav-link" onClick={() => navigate('/')} style={{ marginBottom: 52, display: 'flex', alignItems: 'center', gap: 8 }}>
-          ← Back to The Reals
+          Back to The Reals
         </button>
 
         {!submitted ? (
@@ -847,34 +801,34 @@ function CreatorJoinPage() {
             <InView>
               <div className="tr-section-tag">Creator Beta Application</div>
               <h1 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(52px, 7vw, 96px)', lineHeight: 0.9, color: C.ink, marginBottom: 40 }}>
-                Join as a<br /><em style={{ fontStyle: 'italic', color: C.red }}>Creator.</em>
+                Join as a<br /><span style={{ color: C.red }}>Creator.</span>
               </h1>
             </InView>
 
             <InView delay={0.1}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 72, paddingBottom: 72, borderBottom: `1px solid ${C.dust}` }}>
                 <div>
-                  <p style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 18, lineHeight: 1.65, color: C.ink2, marginBottom: 24 }}>
-                    The Reals is built for Creators who take authenticity seriously. If you've built an audience on the back of genuine storytelling — not hacks, not tactics — this is your platform.
+                  <p style={{ fontFamily: body, fontSize: 16, lineHeight: 1.7, color: C.ink2, marginBottom: 20 }}>
+                    The Reals&#8482; is built for Creators who take authenticity seriously. If you've built an audience on the back of genuine storytelling, this is your platform.
                   </p>
-                  <p style={{ fontFamily: mono, fontSize: 11, lineHeight: 1.85, color: C.muted, fontWeight: 300, marginBottom: 16 }}>
+                  <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: C.muted, marginBottom: 16 }}>
                     We're in Beta. That means access is deliberately limited, and every application is reviewed by a human. We're not looking for follower counts. We're looking for Creators with a clear voice and a community that trusts them.
                   </p>
-                  <p style={{ fontFamily: mono, fontSize: 11, lineHeight: 1.85, color: C.muted, fontWeight: 300 }}>
+                  <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: C.muted }}>
                     Beta members get early access to brand partnerships, input into how the platform develops, and a founding-member rate that never changes.
                   </p>
                 </div>
                 <div>
                   {[
                     { n: '01', t: 'Apply', b: "Tell us about yourself and your audience. No pitch deck required." },
-                    { n: '02', t: 'Review', b: "Applications are reviewed individually — we'll respond within 5 days." },
+                    { n: '02', t: 'Review', b: "Applications are reviewed individually. We'll respond within 5 days." },
                     { n: '03', t: 'Onboard', b: "Access the platform, connect your channels, and start seeing matched briefs." },
                   ].map(step => (
                     <div key={step.n} style={{ display: 'flex', gap: 20, marginBottom: 28 }}>
                       <div style={{ fontFamily: serif, fontWeight: 800, fontSize: 13, color: C.red, paddingTop: 2, flexShrink: 0 }}>{step.n}</div>
                       <div>
                         <div style={{ fontFamily: serif, fontWeight: 700, fontSize: 15, color: C.ink, marginBottom: 6 }}>{step.t}</div>
-                        <div style={{ fontFamily: mono, fontSize: 10, lineHeight: 1.7, color: C.muted, fontWeight: 300 }}>{step.b}</div>
+                        <div style={{ fontFamily: body, fontSize: 13, lineHeight: 1.65, color: C.muted }}>{step.b}</div>
                       </div>
                     </div>
                   ))}
@@ -903,20 +857,20 @@ function CreatorJoinPage() {
                     <select className="tr-select" required value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}>
                       <option value="" disabled>Select a category</option>
                       <option value="lifestyle">Lifestyle</option>
-                      <option value="fashion">Fashion & Style</option>
-                      <option value="food">Food & Drink</option>
+                      <option value="fashion">Fashion &amp; Style</option>
+                      <option value="food">Food &amp; Drink</option>
                       <option value="travel">Travel</option>
-                      <option value="fitness">Fitness & Wellbeing</option>
+                      <option value="fitness">Fitness &amp; Wellbeing</option>
                       <option value="tech">Technology</option>
-                      <option value="culture">Culture & Arts</option>
+                      <option value="culture">Culture &amp; Arts</option>
                       <option value="other">Other</option>
                     </select>
                   </div>
                 </div>
                 <div style={{ marginTop: 48 }}>
-                  <button type="submit" className="tr-btn-primary">Submit Application →</button>
-                  <p style={{ fontFamily: mono, fontStyle: 'italic', fontSize: 9, color: C.muted, marginTop: 16, letterSpacing: '0.1em' }}>
-                    We review every application individually — you'll hear from us within 5 working days
+                  <button type="submit" className="tr-btn-primary">Submit Application</button>
+                  <p style={{ fontFamily: body, fontSize: 12, color: C.muted, marginTop: 16 }}>
+                    We review every application individually. You'll hear from us within 5 working days.
                   </p>
                 </div>
               </form>
@@ -928,12 +882,12 @@ function CreatorJoinPage() {
               Application Received
             </div>
             <h2 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: 0.92, color: C.ink, marginBottom: 32 }}>
-              You're in<br /><em style={{ fontStyle: 'italic', color: C.red }}>the queue.</em>
+              You're in<br /><span style={{ color: C.red }}>the queue.</span>
             </h2>
-            <p style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 20, lineHeight: 1.55, color: C.ink2, maxWidth: 500, marginBottom: 40 }}>
-              We've received your application, {form.name?.split(' ')[0] || 'Creator'}. A real human will review it — expect to hear from us within 5 working days.
+            <p style={{ fontFamily: body, fontSize: 18, lineHeight: 1.65, color: C.ink2, maxWidth: 500, marginBottom: 40 }}>
+              We've received your application, {form.name?.split(' ')[0] || 'Creator'}. A real human will review it. Expect to hear from us within 5 working days.
             </p>
-            <button className="tr-btn-ghost" onClick={() => navigate('/')}>← Back to The Reals</button>
+            <button className="tr-btn-ghost" onClick={() => navigate('/')}>Back to The Reals</button>
           </motion.div>
         )}
       </div>
@@ -942,10 +896,10 @@ function CreatorJoinPage() {
 }
 
 const brandInputStyle: React.CSSProperties = {
-  display: 'block', width: '100%', fontFamily: mono, fontSize: 11,
+  display: 'block', width: '100%', fontFamily: body, fontSize: 14,
   background: 'transparent', border: 'none',
   borderBottom: '1px solid rgba(246,245,241,0.15)',
-  padding: '14px 0', color: '#f6f5f1', outline: 'none', letterSpacing: '0.04em',
+  padding: '14px 0', color: '#f6f5f1', outline: 'none',
 };
 const brandLabelStyle: React.CSSProperties = {
   display: 'block', fontFamily: mono, fontSize: 8, letterSpacing: '0.22em',
@@ -965,7 +919,7 @@ function BrandJoinPage() {
           onClick={() => navigate('/')}
           style={{ marginBottom: 52, display: 'flex', alignItems: 'center', gap: 8 }}
         >
-          ← Back to The Reals
+          Back to The Reals
         </button>
 
         {!submitted ? (
@@ -976,31 +930,31 @@ function BrandJoinPage() {
                 Brand Partnerships
               </div>
               <h1 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(52px, 7vw, 96px)', lineHeight: 0.9, color: C.white, marginBottom: 40 }}>
-                Partner<br /><em style={{ fontStyle: 'italic', color: C.red }}>With Us.</em>
+                Partner<br /><span style={{ color: C.red }}>With Us.</span>
               </h1>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 72, paddingBottom: 72, borderBottom: '1px solid rgba(246,245,241,0.1)' }}>
                 <div>
-                  <p style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 18, lineHeight: 1.65, color: 'rgba(246,245,241,0.7)', marginBottom: 24 }}>
-                    The Reals connects brands with Creators whose audiences have chosen to be there — not algorithmically delivered, but genuinely earned.
+                  <p style={{ fontFamily: body, fontSize: 16, lineHeight: 1.7, color: 'rgba(246,245,241,0.7)', marginBottom: 20 }}>
+                    The Reals&#8482; connects brands with Creators whose audiences have chosen to be there. Not algorithmically delivered, but genuinely earned.
                   </p>
-                  <p style={{ fontFamily: mono, fontSize: 11, lineHeight: 1.85, color: 'rgba(246,245,241,0.4)', fontWeight: 300 }}>
-                    We work with brands that understand the difference between reach and resonance. If you're looking for the cheapest route to impressions, this isn't for you. If you want Creators who will stand behind your product because they genuinely believe in it — let's talk.
+                  <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: 'rgba(246,245,241,0.4)' }}>
+                    We work with brands that understand the difference between reach and resonance. If you're looking for the cheapest route to impressions, this isn't for you. If you want Creators who will stand behind your product because they genuinely believe in it, let's talk.
                   </p>
                 </div>
                 <div>
                   {[
                     { n: '01', t: 'Verified Creators Only', b: "Every Creator on The Reals has been individually vetted for authenticity, consistency, and audience trust." },
-                    { n: '02', t: 'Brief-to-Match', b: "Share your campaign brief. We surface Creators who are a genuine fit — not just the ones with the biggest numbers." },
+                    { n: '02', t: 'Brief-to-Match', b: "Share your campaign brief. We surface Creators who are a genuine fit, not just the ones with the biggest numbers." },
                     { n: '03', t: 'Full Transparency', b: "Clear deliverables, fair rates, and creative briefs that respect the Creator's voice." },
                   ].map(step => (
                     <div key={step.n} style={{ display: 'flex', gap: 20, marginBottom: 28 }}>
                       <div style={{ fontFamily: serif, fontWeight: 800, fontSize: 13, color: C.red, paddingTop: 2, flexShrink: 0 }}>{step.n}</div>
                       <div>
                         <div style={{ fontFamily: serif, fontWeight: 700, fontSize: 15, color: C.white, marginBottom: 6 }}>{step.t}</div>
-                        <div style={{ fontFamily: mono, fontSize: 10, lineHeight: 1.7, color: 'rgba(246,245,241,0.4)', fontWeight: 300 }}>{step.b}</div>
+                        <div style={{ fontFamily: body, fontSize: 13, lineHeight: 1.65, color: 'rgba(246,245,241,0.4)' }}>{step.b}</div>
                       </div>
                     </div>
                   ))}
@@ -1041,10 +995,10 @@ function BrandJoinPage() {
                 </div>
                 <div style={{ marginTop: 48 }}>
                   <button type="submit" style={{ display: 'inline-block', fontFamily: mono, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', background: C.red, color: '#fff', border: 'none', padding: '15px 32px', cursor: 'none', transition: 'background 0.2s' }}>
-                    Send Enquiry →
+                    Send Enquiry
                   </button>
-                  <p style={{ fontFamily: mono, fontStyle: 'italic', fontSize: 9, color: 'rgba(246,245,241,0.3)', marginTop: 16, letterSpacing: '0.1em' }}>
-                    Brand enquiries are reviewed within 3 working days
+                  <p style={{ fontFamily: body, fontSize: 12, color: 'rgba(246,245,241,0.3)', marginTop: 16 }}>
+                    Brand enquiries are reviewed within 3 working days.
                   </p>
                 </div>
               </form>
@@ -1056,16 +1010,16 @@ function BrandJoinPage() {
               Enquiry Received
             </div>
             <h2 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: 0.92, color: C.white, marginBottom: 32 }}>
-              We'll be in<br /><em style={{ fontStyle: 'italic', color: C.red }}>touch.</em>
+              We'll be in<br /><span style={{ color: C.red }}>touch.</span>
             </h2>
-            <p style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 20, lineHeight: 1.55, color: 'rgba(246,245,241,0.65)', maxWidth: 500, marginBottom: 40 }}>
+            <p style={{ fontFamily: body, fontSize: 18, lineHeight: 1.65, color: 'rgba(246,245,241,0.65)', maxWidth: 500, marginBottom: 40 }}>
               Thanks for reaching out, {form.contact?.split(' ')[0] || 'there'}. Someone from our partnerships team will be in contact within 3 working days.
             </p>
             <button
               style={{ display: 'inline-block', fontFamily: mono, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', background: 'transparent', color: 'rgba(246,245,241,0.5)', border: '1px solid rgba(246,245,241,0.2)', padding: '14px 24px', cursor: 'none', transition: 'border-color 0.2s, color 0.2s' }}
               onClick={() => navigate('/')}
             >
-              ← Back to The Reals
+              Back to The Reals
             </button>
           </motion.div>
         )}
@@ -1092,7 +1046,7 @@ function AppShell() {
       <Cursor />
 
       <div style={{
-        position: 'fixed', top: 0, left: 0, right: 0, height: 80,
+        position: 'fixed', top: 0, left: 0, right: 0, height: 116,
         background: isDark ? C.ink : C.paper,
         zIndex: 490, transition: 'background 0.4s',
       }} />
