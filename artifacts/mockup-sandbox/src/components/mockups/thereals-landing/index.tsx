@@ -15,7 +15,7 @@ import editorial800 from '@assets/EditorialToday-ExtraBold_1780690089221.ttf';
 
 import logo09 from '@assets/thereals_logos-09_1780690102829.svg';
 import logo10 from '@assets/thereals_logos-10_1780690102829.svg';
-import logo08 from '@assets/thereals_logos-08_1780690102828.svg';
+import wordmark from '@assets/thereals_wordmark_1780692562361.svg';
 
 const C = {
   paper:  '#ede9e0',
@@ -461,27 +461,16 @@ function HeroSection() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{ marginBottom: 24 }}
           >
-            <div style={{
-              overflow: 'hidden',
-              width: '100%',
-              height: 'clamp(140px, 18vw, 260px)',
-              position: 'relative',
-              marginBottom: 24,
-            }}>
-              <img
-                src={logo08}
-                alt="The Reals wordmark"
-                style={{
-                  width: '115%',
-                  display: 'block',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  transformOrigin: 'top left',
-                }}
-              />
-            </div>
+            <img
+              src={wordmark}
+              alt="The Reals"
+              style={{
+                width: '100%',
+                display: 'block',
+              }}
+            />
           </motion.div>
 
           <motion.p
