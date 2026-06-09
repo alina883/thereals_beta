@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Switch, Route, useLocation } from 'wouter';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import editorial100 from '@assets/EditorialToday-Thin_1780690089219.ttf';
 import editorial400 from '@assets/EditorialToday-Regular_1780690089220.ttf';
 import editorial600 from '@assets/EditorialToday-SemiBold_1780690089220.ttf';
 import editorial700 from '@assets/EditorialToday-Bold_1780690089219.ttf';
@@ -12,20 +13,20 @@ import logo10 from '@assets/thereals_logos-10_1780690102829.svg';
 import wordmark from '@assets/thereals_wordmark_1780692562361.svg';
 
 const C = {
-  paper:  '#ede9e0',
-  paper2: '#e4dfd4',
-  cream:  '#f7f3eb',
-  ink:    '#1a1814',
-  ink2:   '#3a3630',
-  muted:  '#8a8278',
-  dust:   '#b8b0a0',
-  red:    '#e30005',
-  white:  '#f6f5f1',
+  paper:  '#F3F1EB',
+  paper2: '#E8E4DA',
+  cream:  '#F3F1EB',
+  ink:    '#1A1A1A',
+  ink2:   '#302E29',
+  muted:  '#8A8578',
+  dust:   '#C9C5BB',
+  red:    '#F70505',
+  white:  '#FAFAF8',
 } as const;
 
-const mono = "'DM Mono', 'Courier New', monospace";
+const mono = "'Space Mono', 'Courier New', monospace";
 const serif = "'EditorialToday', Georgia, serif";
-const body = "'Inter', 'Helvetica Neue', Arial, sans-serif";
+const body = "'Plus Jakarta Sans', -apple-system, sans-serif";
 
 function useGlobalStyles() {
   useEffect(() => {
@@ -34,6 +35,12 @@ function useGlobalStyles() {
     const s = document.createElement('style');
     s.id = 'thereals-global';
     s.textContent = `
+      @font-face {
+        font-family: 'EditorialToday';
+        font-weight: 100;
+        font-style: normal;
+        src: url('${editorial100}') format('truetype');
+      }
       @font-face {
         font-family: 'EditorialToday';
         font-weight: 400;
@@ -81,26 +88,42 @@ function useGlobalStyles() {
         mix-blend-mode: multiply;
       }
 
-      .tr-cursor-dot {
+      .tr-cursor {
         position: fixed;
-        width: 10px; height: 10px;
-        background: ${C.red};
-        border-radius: 50%;
+        width: 30px; height: 22px;
         pointer-events: none;
         z-index: 9999;
         transform: translate(-50%, -50%);
-        transition: transform 0.1s, width 0.15s, height 0.15s;
       }
-      .tr-cursor-ring {
-        position: fixed;
-        width: 34px; height: 34px;
-        border: 1.5px solid ${C.red};
+      .tr-cursor .tr-bracket {
+        position: absolute;
+        width: 1px; height: 18px;
+        background: var(--cursor-bracket-color, ${C.ink});
+      }
+      .tr-cursor .tr-bracket::before,
+      .tr-cursor .tr-bracket::after {
+        content: '';
+        position: absolute;
+        width: 5px; height: 1px;
+        background: var(--cursor-bracket-color, ${C.ink});
+      }
+      .tr-cursor .tr-bracket-l { left: 0; }
+      .tr-cursor .tr-bracket-l::before { top: 0; left: 0; }
+      .tr-cursor .tr-bracket-l::after  { bottom: 0; left: 0; }
+      .tr-cursor .tr-bracket-r { right: 0; }
+      .tr-cursor .tr-bracket-r::before { top: 0; right: 0; }
+      .tr-cursor .tr-bracket-r::after  { bottom: 0; right: 0; }
+      .tr-cursor .tr-rec-dot {
+        width: 8px; height: 8px;
+        background: ${C.red};
         border-radius: 50%;
-        pointer-events: none;
-        z-index: 9998;
+        position: absolute;
+        top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        opacity: 0.45;
-        transition: width 0.25s, height 0.25s, opacity 0.2s;
+      }
+      @media (pointer: coarse) {
+        .tr-cursor { display: none; }
+        .tr-root { cursor: auto; }
       }
 
       .tr-btn-primary {
@@ -166,7 +189,7 @@ function useGlobalStyles() {
         background: repeating-linear-gradient(
           180deg,
           transparent 0px, transparent 79px,
-          rgba(26,24,20,0.05) 79px, rgba(26,24,20,0.05) 80px
+          rgba(26,26,26,0.05) 79px, rgba(26,26,26,0.05) 80px
         );
       }
 
@@ -253,14 +276,14 @@ function useGlobalStyles() {
         font-size: 9px;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: rgba(246,245,241,0.4);
+        color: rgba(250,250,248,0.4);
         text-decoration: none;
         cursor: none;
         background: none;
         border: none;
         transition: color 0.2s;
       }
-      .tr-nav-link-light:hover { color: rgba(246,245,241,0.9); }
+      .tr-nav-link-light:hover { color: rgba(250,250,248,0.9); }
 
       .tr-film-frame {
         width: 100%;
@@ -292,43 +315,30 @@ function useGlobalStyles() {
   }, []);
 }
 
-function Cursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const pos = useRef({ x: 0, y: 0 });
-  const ringPos = useRef({ x: 0, y: 0 });
-  const raf = useRef<number>(0);
+function Cursor({ dark }: { dark?: boolean }) {
+  const vfRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY };
-      if (dotRef.current) {
-        dotRef.current.style.left = `${e.clientX}px`;
-        dotRef.current.style.top = `${e.clientY}px`;
+      if (vfRef.current) {
+        vfRef.current.style.left = `${e.clientX}px`;
+        vfRef.current.style.top = `${e.clientY}px`;
       }
-    };
-    const animate = () => {
-      ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.12;
-      ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.12;
-      if (ringRef.current) {
-        ringRef.current.style.left = `${ringPos.current.x}px`;
-        ringRef.current.style.top = `${ringPos.current.y}px`;
-      }
-      raf.current = requestAnimationFrame(animate);
     };
     document.addEventListener('mousemove', onMove);
-    raf.current = requestAnimationFrame(animate);
-    return () => {
-      document.removeEventListener('mousemove', onMove);
-      cancelAnimationFrame(raf.current);
-    };
+    return () => document.removeEventListener('mousemove', onMove);
   }, []);
 
   return (
-    <>
-      <div ref={dotRef} className="tr-cursor-dot" />
-      <div ref={ringRef} className="tr-cursor-ring" />
-    </>
+    <div
+      ref={vfRef}
+      className="tr-cursor"
+      style={{ '--cursor-bracket-color': dark ? C.white : C.ink } as React.CSSProperties}
+    >
+      <div className="tr-bracket tr-bracket-l" />
+      <div className="tr-bracket tr-bracket-r" />
+      <div className="tr-rec-dot" />
+    </div>
   );
 }
 
@@ -492,7 +502,7 @@ function ManifestoSection() {
         <div style={{
           position: 'absolute', bottom: -20, right: -10,
           fontFamily: serif, fontWeight: 800,
-          fontSize: 240, color: 'rgba(26,24,20,0.035)', lineHeight: 1,
+          fontSize: 240, color: 'rgba(26,26,26,0.035)', lineHeight: 1,
           pointerEvents: 'none', userSelect: 'none',
         }}>01</div>
         <InView>
@@ -623,7 +633,7 @@ function JoinSection() {
           onClick={() => navigate('/join/creator')}
           style={{ textAlign: 'left', width: '100%', background: C.cream }}
         >
-          <div style={{ position: 'absolute', top: -16, right: 24, fontFamily: serif, fontWeight: 800, fontSize: 120, color: 'rgba(26,24,20,0.045)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>01</div>
+          <div style={{ position: 'absolute', top: -16, right: 24, fontFamily: serif, fontWeight: 800, fontSize: 120, color: 'rgba(26,26,26,0.045)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>01</div>
           <div className="tr-section-tag" style={{ marginBottom: 20 }}>
             <span style={{ color: C.red, fontFamily: mono, fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Now Open</span>
           </div>
@@ -650,7 +660,7 @@ function JoinSection() {
           onClick={() => navigate('/join/brand')}
           style={{ textAlign: 'left', width: '100%' }}
         >
-          <div style={{ position: 'absolute', top: -16, right: 24, fontFamily: serif, fontWeight: 800, fontSize: 120, color: 'rgba(26,24,20,0.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>02</div>
+          <div style={{ position: 'absolute', top: -16, right: 24, fontFamily: serif, fontWeight: 800, fontSize: 120, color: 'rgba(26,26,26,0.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>02</div>
           <div style={{ display: 'inline-block', fontFamily: mono, fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: C.muted, border: `1px solid ${C.dust}`, padding: '4px 10px', marginBottom: 20 }}>
             Licensing Buyers
           </div>
@@ -820,12 +830,12 @@ function CreatorJoinPage() {
 const brandInputStyle: React.CSSProperties = {
   display: 'block', width: '100%', fontFamily: body, fontSize: 14,
   background: 'transparent', border: 'none',
-  borderBottom: '1px solid rgba(246,245,241,0.15)',
-  padding: '14px 0', color: '#f6f5f1', outline: 'none',
+  borderBottom: `1px solid ${C.white}26`,
+  padding: '14px 0', color: C.white, outline: 'none',
 };
 const brandLabelStyle: React.CSSProperties = {
   display: 'block', fontFamily: mono, fontSize: 8, letterSpacing: '0.22em',
-  textTransform: 'uppercase', color: 'rgba(246,245,241,0.35)', marginBottom: 4, marginTop: 28,
+  textTransform: 'uppercase', color: 'rgba(250,250,248,0.35)', marginBottom: 4, marginTop: 28,
 };
 
 function BrandJoinPage() {
@@ -847,7 +857,7 @@ function BrandJoinPage() {
         {!submitted ? (
           <>
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <div style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(246,245,241,0.45)', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
+              <div style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(250,250,248,0.45)', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
                 <span style={{ display: 'block', width: 32, height: 1, background: C.red, flexShrink: 0 }} />
                 Licensing Buyers
               </div>
@@ -857,12 +867,12 @@ function BrandJoinPage() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 72, paddingBottom: 72, borderBottom: '1px solid rgba(246,245,241,0.1)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, marginBottom: 72, paddingBottom: 72, borderBottom: '1px solid rgba(250,250,248,0.1)' }}>
                 <div>
-                  <p style={{ fontFamily: body, fontSize: 16, lineHeight: 1.7, color: 'rgba(246,245,241,0.7)', marginBottom: 20 }}>
+                  <p style={{ fontFamily: body, fontSize: 16, lineHeight: 1.7, color: 'rgba(250,250,248,0.7)', marginBottom: 20 }}>
                     The Reals&#8482; is a pre-cleared library of authentic, human-made social content. Every asset is C2PA-verified and available to license at a fixed price, immediately, without sourcing lag or rights negotiation.
                   </p>
-                  <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: 'rgba(246,245,241,0.4)' }}>
+                  <p style={{ fontFamily: body, fontSize: 14, lineHeight: 1.8, color: 'rgba(250,250,248,0.4)' }}>
                     We built this for agency creatives, in-house social teams, and producers who lose days chasing down rights that should have been clear from the start. If you want real content that's legally clean from the moment you find it, this is the infrastructure you've been missing.
                   </p>
                 </div>
@@ -876,7 +886,7 @@ function BrandJoinPage() {
                       <div style={{ fontFamily: serif, fontWeight: 800, fontSize: 13, color: C.red, paddingTop: 2, flexShrink: 0 }}>{step.n}</div>
                       <div>
                         <div style={{ fontFamily: serif, fontWeight: 700, fontSize: 15, color: C.white, marginBottom: 6 }}>{step.t}</div>
-                        <div style={{ fontFamily: body, fontSize: 13, lineHeight: 1.65, color: 'rgba(246,245,241,0.4)' }}>{step.b}</div>
+                        <div style={{ fontFamily: body, fontSize: 13, lineHeight: 1.65, color: 'rgba(250,250,248,0.4)' }}>{step.b}</div>
                       </div>
                     </div>
                   ))}
@@ -886,7 +896,7 @@ function BrandJoinPage() {
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
               <form onSubmit={e => { e.preventDefault(); setSubmitted(true); }}>
-                <div style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(246,245,241,0.45)', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
+                <div style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(250,250,248,0.45)', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 40 }}>
                   <span style={{ display: 'block', width: 32, height: 1, background: C.red, flexShrink: 0 }} />
                   Brand Enquiry
                 </div>
@@ -919,7 +929,7 @@ function BrandJoinPage() {
                   <button type="submit" style={{ display: 'inline-block', fontFamily: mono, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', background: C.red, color: '#fff', border: 'none', padding: '15px 32px', cursor: 'none', transition: 'background 0.2s' }}>
                     Send Enquiry
                   </button>
-                  <p style={{ fontFamily: body, fontSize: 12, color: 'rgba(246,245,241,0.3)', marginTop: 16 }}>
+                  <p style={{ fontFamily: body, fontSize: 12, color: 'rgba(250,250,248,0.3)', marginTop: 16 }}>
                     Brand enquiries are reviewed within 3 working days.
                   </p>
                 </div>
@@ -934,11 +944,11 @@ function BrandJoinPage() {
             <h2 style={{ fontFamily: serif, fontWeight: 800, fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: 0.92, color: C.white, marginBottom: 32 }}>
               We'll be in<br /><span style={{ color: C.red }}>touch.</span>
             </h2>
-            <p style={{ fontFamily: body, fontSize: 18, lineHeight: 1.65, color: 'rgba(246,245,241,0.65)', maxWidth: 500, marginBottom: 40 }}>
+            <p style={{ fontFamily: body, fontSize: 18, lineHeight: 1.65, color: 'rgba(250,250,248,0.65)', maxWidth: 500, marginBottom: 40 }}>
               Thanks for reaching out, {form.contact?.split(' ')[0] || 'there'}. Someone from our partnerships team will be in contact within 3 working days.
             </p>
             <button
-              style={{ display: 'inline-block', fontFamily: mono, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', background: 'transparent', color: 'rgba(246,245,241,0.5)', border: '1px solid rgba(246,245,241,0.2)', padding: '14px 24px', cursor: 'none', transition: 'border-color 0.2s, color 0.2s' }}
+              style={{ display: 'inline-block', fontFamily: mono, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', background: 'transparent', color: 'rgba(250,250,248,0.5)', border: '1px solid rgba(250,250,248,0.2)', padding: '14px 24px', cursor: 'none', transition: 'border-color 0.2s, color 0.2s' }}
               onClick={() => navigate('/')}
             >
               Back to The Reals
@@ -962,7 +972,7 @@ function AppShell() {
   return (
     <div className="tr-root" style={{ minHeight: '100vh', position: 'relative' }}>
       <div className="tr-grain" />
-      <Cursor />
+      <Cursor dark={isDark} />
 
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, height: 116,

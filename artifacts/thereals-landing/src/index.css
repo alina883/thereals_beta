@@ -1,5 +1,16 @@
-/* The landing page uses inline styles and injected global styles via useGlobalStyles().
-   This file is kept minimal — no Tailwind variables needed for this design. */
+@theme {
+  --color-brand-red: #F70505;
+  --color-brand-cream: #F3F1EB;
+  --color-brand-black: #1A1A1A;
+  --color-brand-charcoal: #302E29;
+  --color-brand-grey: #8A8578;
+  --color-brand-light-grey: #C9C5BB;
+  --color-brand-white: #FAFAF8;
+
+  --font-display: 'EditorialToday', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -12,8 +23,9 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background: #ede9e0;
-  color: #1a1814;
+  background: #F3F1EB;
+  color: #1A1A1A;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
